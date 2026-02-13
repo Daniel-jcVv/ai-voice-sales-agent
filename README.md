@@ -1,16 +1,18 @@
-# AI Voice Sales Agent
+# AI Voice Sales Agent — Data Center Hardware & Peripherals
 
-An AI-powered voice assistant that handles customer support calls for a server components & accessories store. It automates product recommendations, order tracking, and sales conversations — reducing response time from minutes to seconds.
+An AI-powered voice assistant built for data center hardware distributors. It handles inbound sales calls for server components, rack accessories, networking gear, and peripherals — automating product recommendations, order tracking, and technical consultations 24/7.
 
 ## Problem
 
-Retail stores lose **30-40% of potential sales** because customers can't get immediate answers about product availability, pricing, or order status. Hiring 24/7 support staff costs $2,000-5,000/month per agent.
+Data center hardware distributors handle **high-volume, repetitive inquiries** — RAM compatibility, rack unit availability, cable specs, bulk pricing. Sales reps spend 60%+ of their time answering the same questions instead of closing deals.
 
 This solution provides an always-available AI voice agent that:
-- Answers product questions with real-time inventory data
-- Tracks orders by ID with identity verification
-- Recommends products based on customer needs and budget
-- Handles objections and closes sales
+
+- Recommends server components based on workload requirements (compute, storage, networking)
+- Checks real-time inventory for rack accessories, SSDs, NICs, cables, and peripherals
+- Tracks bulk orders by ID with identity verification
+- Handles technical specs questions (form factor, compatibility, power consumption)
+- Frees up sales reps to focus on high-value enterprise deals
 
 ## Architecture
 
@@ -56,10 +58,11 @@ Validate orderId exists in body?
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Response time | 2-5 min (human) | < 3 sec |
-| Availability | Business hours | 24/7 |
+| Response time | 2-5 min (sales rep) | < 3 sec |
+| Availability | Business hours only | 24/7 (nights, weekends, holidays) |
 | Cost per interaction | $1-3 (human agent) | $0.02 (API calls) |
-| Product accuracy | Varies | 100% (real-time data) |
+| Product accuracy | Varies by rep knowledge | 100% (real-time inventory) |
+| Sales rep time on routine queries | 60%+ | 0% (handled by AI) |
 
 ## Tech Stack
 
@@ -67,9 +70,11 @@ Validate orderId exists in body?
 |-----------|-----------|---------|
 | Voice AI | ElevenLabs Conversational AI | Natural voice interactions |
 | Orchestrator | n8n (self-hosted) | Workflow automation, API routing |
-| Backend API | json-server (Node.js) | Product catalog + order management |
+| Backend API | json-server (Node.js) | Product catalog + order management (swappable for any REST API) |
 | Tunnel | ngrok | Expose local services to ElevenLabs |
 | Auth | Header-based API key | Secure webhook endpoints |
+
+> **Note:** The json-server backend is a demo layer. In production, swap it for any REST API (WooCommerce, Shopify, SAP, custom ERP) — the n8n workflow stays the same.
 
 ## Security Features
 
