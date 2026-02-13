@@ -1,0 +1,349 @@
+{
+  "name": "Tools Eleven-labs",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:3000/products",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        176,
+        -48
+      ],
+      "id": "647c6edb-f39c-4ef7-8a79-6969834420f5",
+      "name": "HTTP Request GET products"
+    },
+    {
+      "parameters": {
+        "path": "my-store/products",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        -48
+      ],
+      "id": "7d1b1b96-8ec9-4059-b23c-c98382986f05",
+      "name": "Webhook Get products from my-store",
+      "webhookId": "b1355c95-01c9-4f7e-957e-75bcb205d076",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RRdCrl0E8DOyYBix",
+          "name": "11labs api key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        384,
+        -48
+      ],
+      "id": "f458a13a-d2ed-4934-bc5d-d0e2f9f8b928",
+      "name": "Respond to Webhook products"
+    },
+    {
+      "parameters": {
+        "content": "## Get products\n#### obtiene products del backend (endpoint)",
+        "height": 416,
+        "width": 672,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -256
+      ],
+      "id": "1ec32e9b-3191-40a7-99dc-8e7daeebf075",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "my-store/orders",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        272
+      ],
+      "id": "e93d8195-42ca-4d9b-bf7c-9f105fcc95a1",
+      "name": "Webhook Get order by order_id",
+      "webhookId": "b1355c95-01c9-4f7e-957e-75bcb205d076",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RRdCrl0E8DOyYBix",
+          "name": "11labs api key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        720,
+        240
+      ],
+      "id": "ea47b7b5-cf8a-4954-8ac7-4e772a17bdaa",
+      "name": "Respond to Webhook Response with Order"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "eb8ca1e4-2cae-4515-afa6-aee416ac08e2",
+              "leftValue": "={{ $json.body.orderId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        64,
+        272
+      ],
+      "id": "51f19def-02ce-48e8-b8b7-911d8cb54064",
+      "name": "exist order id in body?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"ok\": \"false\",\n  \"errors\": \"orderId is required\"\n}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        288,
+        448
+      ],
+      "id": "0a2050ec-a899-4f03-8321-a51ebf5ddae1",
+      "name": "Respond to Webhook Response Bad request"
+    },
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:3000/orders/{{ $json.body.orderId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        304,
+        240
+      ],
+      "id": "477e7bf4-3c57-4af2-abb5-53b7d8d11728",
+      "name": "HTTP Request Get order by Id",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9e058e10-f1e5-4fea-b660-5dad36904882",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        496,
+        240
+      ],
+      "id": "22c305f3-7ddd-4530-860f-31fbd07b2340",
+      "name": "Order founded?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"ok\": \"false\",\n  \"errors\": \"order not founded\"\n}",
+        "options": {
+          "responseCode": 404
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        720,
+        432
+      ],
+      "id": "74824150-b196-4a90-8052-cdfffd83ba72",
+      "name": "Respond to Webhook Response not founded order"
+    },
+    {
+      "parameters": {
+        "content": "## Get order by Id\nSe obtiene order por id",
+        "height": 416,
+        "width": 1200,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -256,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "a91c051c-62bc-4522-acc2-359a952dcde8",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Get products from my-store": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request GET products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request GET products": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Get order by order_id": {
+      "main": [
+        [
+          {
+            "node": "exist order id in body?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "exist order id in body?": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Get order by Id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook Response Bad request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Get order by Id": {
+      "main": [
+        [
+          {
+            "node": "Order founded?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order founded?": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook Response with Order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook Response not founded order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "872646c1-8456-4c4c-8279-eebab7324198",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "652a0b283908441e8ad1ace1891fd139f657f5ee0558b6c7d87b71e6e8825a46"
+  },
+  "id": "YbLMguX5Elv6uY54",
+  "tags": [
+    {
+      "updatedAt": "2026-02-13T02:53:02.009Z",
+      "createdAt": "2026-02-13T02:53:02.009Z",
+      "id": "5ptQwvfd6TSBcV9U",
+      "name": "11-labs"
+    }
+  ]
+}
