@@ -177,7 +177,21 @@ my-store/
     └── n8n-workflow-ai-agent-tool-elevenlabs.json  # n8n workflow (importable)
 ```
 
+## Author
+
+**Juan Daniel García Belman** — AI Data Automation Engineer
+
+Data Engineer with 3+ years building production ETL pipelines for Fortune 500 clients (Telcel, Citi Banamex), now specializing in AI-powered workflow automation and intelligent agents.
+
+- [LinkedIn](www.linkedin.com/in/daniel-garcía-belman-99a298aa)
+- [GitHub](https://github.com/Daniel-jcVv)
+- [Portfolio](https://danieljcvv-portfolio.vercel.app/)
+
 ## License
 
 MIT
+
+---
+
+> **Soli Deo gloria.**
 
