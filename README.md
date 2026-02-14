@@ -123,7 +123,7 @@ ngrok http 5678
 
 ### 5. Import n8n workflow
 
-Import `workflows/Tools Eleven-labs (1).json` into your n8n instance.
+Import `workflows/n8n-workflow-ai-agent-tool-elevenlabs.json` into your n8n instance.
 
 ## API Endpoints
 
@@ -157,9 +157,10 @@ my-store/
 ├── system-prompt/
 │   └── system-prompt.md  # AI agent behavior rules
 └── workflows/
-    └── Tools Eleven-labs (1).json  # n8n workflow (importable)
+    └── n8n-workflow-ai-agent-tool-elevenlabs.json  # n8n workflow (importable)
 ```
 
 ## License
 
 MIT
+

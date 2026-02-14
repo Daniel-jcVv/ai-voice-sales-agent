@@ -1,7 +1,6 @@
 node_modules
 .env
 package-lock.json
-db.json
 db-back.json
 __pycache__/
 *.pyc
@@ -9,3 +8,8 @@ __pycache__/
 *.pyd
 *.db
 CLAUDE.md
+
+# Ignore agent configuration file
+agent_config.json
+
+

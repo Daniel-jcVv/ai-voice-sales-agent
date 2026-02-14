@@ -1,14 +1,14 @@
 {
-  "name": "mi-tienda",
+  "name": "voice-sales-assistant-agent",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "json-server db.json --port 3000"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "J. Daniel García Belman",
+  "license": "MIT",
+  "description": "Sales assistant voice agent for a store, providing product information and order status updates.",
   "dependencies": {
     "json-server": "^1.0.0-beta.3"
   }
